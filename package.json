@@ -16,7 +16,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "clean": "rm -rf node_modules yarn.lock && yarn",
+    "lint": "eslint --ext .ts,.tsx,.js,.jsx .",
+    "lint:fix": "eslint --ext .ts,.tsx,.js,.jsx . --fix",
+    "lint-staged": "lint-staged"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -37,8 +41,18 @@
     "@typescript-eslint/eslint-plugin": "2.2.0",
     "@typescript-eslint/parser": "2.2.0",
     "eslint": "6.4.0",
-    "eslint-config-prettier": "6.3.0",
-    "eslint-plugin-prettier": "3.1.0",
-    "prettier": "1.18.2"
+    "lint-staged": "9.2.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && tsc"
+    }
+  },
+  "lint-staged": {
+    "*.{ts, tsx, js, jsx}": [
+      "prettier",
+      "lint:fix",
+      "git add"
+    ]
   }
 }
